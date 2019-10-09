@@ -1,0 +1,389 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BDDRestaurantModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="idArticle" />
+          </Key>
+          <Property Name="idArticle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="designationArticle" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="prixArticle" Type="real" Nullable="false" />
+          <Property Name="photoArticle" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="idCatArticle" Type="int" />
+        </EntityType>
+        <EntityType Name="CategorieArticle">
+          <Key>
+            <PropertyRef Name="idCatArticle" />
+          </Key>
+          <Property Name="idCatArticle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="libelleCatArticle" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Commande">
+          <Key>
+            <PropertyRef Name="numCommande" />
+          </Key>
+          <Property Name="numCommande" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dateHeureCommance" Type="datetime" />
+          <Property Name="numTablee" Type="int" Nullable="false" />
+          <Property Name="idServeur" Type="int" Nullable="false" />
+          <Property Name="termine" Type="bit" />
+        </EntityType>
+        <EntityType Name="QteArticle">
+          <Key>
+            <PropertyRef Name="numCommande" />
+            <PropertyRef Name="idArticle" />
+          </Key>
+          <Property Name="numCommande" Type="int" Nullable="false" />
+          <Property Name="idArticle" Type="int" Nullable="false" />
+          <Property Name="qte" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Serveur">
+          <Key>
+            <PropertyRef Name="idServeur" />
+          </Key>
+          <Property Name="idServeur" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomServeur" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="prenomServeur" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="actif" Type="bit" />
+        </EntityType>
+        <EntityType Name="Tablee">
+          <Key>
+            <PropertyRef Name="numTablee" />
+          </Key>
+          <Property Name="numTablee" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nbPlaceTablee" Type="int" />
+        </EntityType>
+        <Association Name="FK_ARTICLE_CATEGORIEARTICLE">
+          <End Role="CategorieArticle" Type="Self.CategorieArticle" Multiplicity="0..1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategorieArticle">
+              <PropertyRef Name="idCatArticle" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="idCatArticle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_COMMANDE_A_TABLEe">
+          <End Role="Tablee" Type="Self.Tablee" Multiplicity="1" />
+          <End Role="Commande" Type="Self.Commande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tablee">
+              <PropertyRef Name="numTablee" />
+            </Principal>
+            <Dependent Role="Commande">
+              <PropertyRef Name="numTablee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_COMMANDE_PREND_SERVEUR">
+          <End Role="Serveur" Type="Self.Serveur" Multiplicity="1" />
+          <End Role="Commande" Type="Self.Commande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Serveur">
+              <PropertyRef Name="idServeur" />
+            </Principal>
+            <Dependent Role="Commande">
+              <PropertyRef Name="idServeur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QTEARTICLE_ARTICLE">
+          <End Role="Article" Type="Self.Article" Multiplicity="1" />
+          <End Role="QteArticle" Type="Self.QteArticle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="idArticle" />
+            </Principal>
+            <Dependent Role="QteArticle">
+              <PropertyRef Name="idArticle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QTEARTICLE_COMMANDE">
+          <End Role="Commande" Type="Self.Commande" Multiplicity="1" />
+          <End Role="QteArticle" Type="Self.QteArticle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commande">
+              <PropertyRef Name="numCommande" />
+            </Principal>
+            <Dependent Role="QteArticle">
+              <PropertyRef Name="numCommande" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BDDRestaurantModelStoreContainer">
+          <EntitySet Name="Article" EntityType="Self.Article" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CategorieArticle" EntityType="Self.CategorieArticle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Commande" EntityType="Self.Commande" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QteArticle" EntityType="Self.QteArticle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Serveur" EntityType="Self.Serveur" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tablee" EntityType="Self.Tablee" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ARTICLE_CATEGORIEARTICLE" Association="Self.FK_ARTICLE_CATEGORIEARTICLE">
+            <End Role="CategorieArticle" EntitySet="CategorieArticle" />
+            <End Role="Article" EntitySet="Article" />
+          </AssociationSet>
+          <AssociationSet Name="FK_COMMANDE_A_TABLEe" Association="Self.FK_COMMANDE_A_TABLEe">
+            <End Role="Tablee" EntitySet="Tablee" />
+            <End Role="Commande" EntitySet="Commande" />
+          </AssociationSet>
+          <AssociationSet Name="FK_COMMANDE_PREND_SERVEUR" Association="Self.FK_COMMANDE_PREND_SERVEUR">
+            <End Role="Serveur" EntitySet="Serveur" />
+            <End Role="Commande" EntitySet="Commande" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QTEARTICLE_ARTICLE" Association="Self.FK_QTEARTICLE_ARTICLE">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="QteArticle" EntitySet="QteArticle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QTEARTICLE_COMMANDE" Association="Self.FK_QTEARTICLE_COMMANDE">
+            <End Role="Commande" EntitySet="Commande" />
+            <End Role="QteArticle" EntitySet="QteArticle" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BDDRestaurantModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="idArticle" />
+          </Key>
+          <Property Name="idArticle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="designationArticle" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="prixArticle" Type="Single" Nullable="false" />
+          <Property Name="photoArticle" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idCatArticle" Type="Int32" />
+          <NavigationProperty Name="CategorieArticle" Relationship="Self.FK_ARTICLE_CATEGORIEARTICLE" FromRole="Article" ToRole="CategorieArticle" />
+          <NavigationProperty Name="QteArticle" Relationship="Self.FK_QTEARTICLE_ARTICLE" FromRole="Article" ToRole="QteArticle" />
+        </EntityType>
+        <EntityType Name="CategorieArticle">
+          <Key>
+            <PropertyRef Name="idCatArticle" />
+          </Key>
+          <Property Name="idCatArticle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="libelleCatArticle" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Article" Relationship="Self.FK_ARTICLE_CATEGORIEARTICLE" FromRole="CategorieArticle" ToRole="Article" />
+        </EntityType>
+        <EntityType Name="Commande">
+          <Key>
+            <PropertyRef Name="numCommande" />
+          </Key>
+          <Property Name="numCommande" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dateHeureCommance" Type="DateTime" Precision="3" />
+          <Property Name="numTablee" Type="Int32" Nullable="false" />
+          <Property Name="idServeur" Type="Int32" Nullable="false" />
+          <Property Name="termine" Type="Boolean" />
+          <NavigationProperty Name="Tablee" Relationship="Self.FK_COMMANDE_A_TABLEe" FromRole="Commande" ToRole="Tablee" />
+          <NavigationProperty Name="Serveur" Relationship="Self.FK_COMMANDE_PREND_SERVEUR" FromRole="Commande" ToRole="Serveur" />
+          <NavigationProperty Name="QteArticle" Relationship="Self.FK_QTEARTICLE_COMMANDE" FromRole="Commande" ToRole="QteArticle" />
+        </EntityType>
+        <EntityType Name="QteArticle">
+          <Key>
+            <PropertyRef Name="numCommande" />
+            <PropertyRef Name="idArticle" />
+          </Key>
+          <Property Name="numCommande" Type="Int32" Nullable="false" />
+          <Property Name="idArticle" Type="Int32" Nullable="false" />
+          <Property Name="qte" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Article" Relationship="Self.FK_QTEARTICLE_ARTICLE" FromRole="QteArticle" ToRole="Article" />
+          <NavigationProperty Name="Commande" Relationship="Self.FK_QTEARTICLE_COMMANDE" FromRole="QteArticle" ToRole="Commande" />
+        </EntityType>
+        <EntityType Name="Serveur">
+          <Key>
+            <PropertyRef Name="idServeur" />
+          </Key>
+          <Property Name="idServeur" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomServeur" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="prenomServeur" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="actif" Type="Boolean" />
+          <NavigationProperty Name="Commande" Relationship="Self.FK_COMMANDE_PREND_SERVEUR" FromRole="Serveur" ToRole="Commande" />
+        </EntityType>
+        <EntityType Name="Tablee">
+          <Key>
+            <PropertyRef Name="numTablee" />
+          </Key>
+          <Property Name="numTablee" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nbPlaceTablee" Type="Int32" />
+          <NavigationProperty Name="Commande" Relationship="Self.FK_COMMANDE_A_TABLEe" FromRole="Tablee" ToRole="Commande" />
+        </EntityType>
+        <Association Name="FK_ARTICLE_CATEGORIEARTICLE">
+          <End Role="CategorieArticle" Type="Self.CategorieArticle" Multiplicity="0..1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategorieArticle">
+              <PropertyRef Name="idCatArticle" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="idCatArticle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QTEARTICLE_ARTICLE">
+          <End Role="Article" Type="Self.Article" Multiplicity="1" />
+          <End Role="QteArticle" Type="Self.QteArticle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="idArticle" />
+            </Principal>
+            <Dependent Role="QteArticle">
+              <PropertyRef Name="idArticle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_COMMANDE_A_TABLEe">
+          <End Role="Tablee" Type="Self.Tablee" Multiplicity="1" />
+          <End Role="Commande" Type="Self.Commande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tablee">
+              <PropertyRef Name="numTablee" />
+            </Principal>
+            <Dependent Role="Commande">
+              <PropertyRef Name="numTablee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_COMMANDE_PREND_SERVEUR">
+          <End Role="Serveur" Type="Self.Serveur" Multiplicity="1" />
+          <End Role="Commande" Type="Self.Commande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Serveur">
+              <PropertyRef Name="idServeur" />
+            </Principal>
+            <Dependent Role="Commande">
+              <PropertyRef Name="idServeur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QTEARTICLE_COMMANDE">
+          <End Role="Commande" Type="Self.Commande" Multiplicity="1" />
+          <End Role="QteArticle" Type="Self.QteArticle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commande">
+              <PropertyRef Name="numCommande" />
+            </Principal>
+            <Dependent Role="QteArticle">
+              <PropertyRef Name="numCommande" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BDDRestaurantEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Article" EntityType="Self.Article" />
+          <EntitySet Name="CategorieArticle" EntityType="Self.CategorieArticle" />
+          <EntitySet Name="Commande" EntityType="Self.Commande" />
+          <EntitySet Name="QteArticle" EntityType="Self.QteArticle" />
+          <EntitySet Name="Serveur" EntityType="Self.Serveur" />
+          <EntitySet Name="Tablee" EntityType="Self.Tablee" />
+          <AssociationSet Name="FK_ARTICLE_CATEGORIEARTICLE" Association="Self.FK_ARTICLE_CATEGORIEARTICLE">
+            <End Role="CategorieArticle" EntitySet="CategorieArticle" />
+            <End Role="Article" EntitySet="Article" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QTEARTICLE_ARTICLE" Association="Self.FK_QTEARTICLE_ARTICLE">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="QteArticle" EntitySet="QteArticle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_COMMANDE_A_TABLEe" Association="Self.FK_COMMANDE_A_TABLEe">
+            <End Role="Tablee" EntitySet="Tablee" />
+            <End Role="Commande" EntitySet="Commande" />
+          </AssociationSet>
+          <AssociationSet Name="FK_COMMANDE_PREND_SERVEUR" Association="Self.FK_COMMANDE_PREND_SERVEUR">
+            <End Role="Serveur" EntitySet="Serveur" />
+            <End Role="Commande" EntitySet="Commande" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QTEARTICLE_COMMANDE" Association="Self.FK_QTEARTICLE_COMMANDE">
+            <End Role="Commande" EntitySet="Commande" />
+            <End Role="QteArticle" EntitySet="QteArticle" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BDDRestaurantModelStoreContainer" CdmEntityContainer="BDDRestaurantEntities">
+          <EntitySetMapping Name="Article">
+            <EntityTypeMapping TypeName="BDDRestaurantModel.Article">
+              <MappingFragment StoreEntitySet="Article">
+                <ScalarProperty Name="idArticle" ColumnName="idArticle" />
+                <ScalarProperty Name="designationArticle" ColumnName="designationArticle" />
+                <ScalarProperty Name="prixArticle" ColumnName="prixArticle" />
+                <ScalarProperty Name="photoArticle" ColumnName="photoArticle" />
+                <ScalarProperty Name="idCatArticle" ColumnName="idCatArticle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CategorieArticle">
+            <EntityTypeMapping TypeName="BDDRestaurantModel.CategorieArticle">
+              <MappingFragment StoreEntitySet="CategorieArticle">
+                <ScalarProperty Name="idCatArticle" ColumnName="idCatArticle" />
+                <ScalarProperty Name="libelleCatArticle" ColumnName="libelleCatArticle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Commande">
+            <EntityTypeMapping TypeName="BDDRestaurantModel.Commande">
+              <MappingFragment StoreEntitySet="Commande">
+                <ScalarProperty Name="numCommande" ColumnName="numCommande" />
+                <ScalarProperty Name="dateHeureCommance" ColumnName="dateHeureCommance" />
+                <ScalarProperty Name="numTablee" ColumnName="numTablee" />
+                <ScalarProperty Name="idServeur" ColumnName="idServeur" />
+                <ScalarProperty Name="termine" ColumnName="termine" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QteArticle">
+            <EntityTypeMapping TypeName="BDDRestaurantModel.QteArticle">
+              <MappingFragment StoreEntitySet="QteArticle">
+                <ScalarProperty Name="numCommande" ColumnName="numCommande" />
+                <ScalarProperty Name="idArticle" ColumnName="idArticle" />
+                <ScalarProperty Name="qte" ColumnName="qte" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Serveur">
+            <EntityTypeMapping TypeName="BDDRestaurantModel.Serveur">
+              <MappingFragment StoreEntitySet="Serveur">
+                <ScalarProperty Name="idServeur" ColumnName="idServeur" />
+                <ScalarProperty Name="nomServeur" ColumnName="nomServeur" />
+                <ScalarProperty Name="prenomServeur" ColumnName="prenomServeur" />
+                <ScalarProperty Name="actif" ColumnName="actif" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tablee">
+            <EntityTypeMapping TypeName="BDDRestaurantModel.Tablee">
+              <MappingFragment StoreEntitySet="Tablee">
+                <ScalarProperty Name="numTablee" ColumnName="numTablee" />
+                <ScalarProperty Name="nbPlaceTablee" ColumnName="nbPlaceTablee" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

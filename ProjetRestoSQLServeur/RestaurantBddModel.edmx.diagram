@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="de12e9f354d84c5eaed9060d6c542184" Name="Diagram1">
+        <EntityTypeShape EntityType="BDDRestaurantModel.Article" Width="1.5" PointX="5.375" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDDRestaurantModel.CategorieArticle" Width="1.5" PointX="8.125" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDDRestaurantModel.Commande" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDDRestaurantModel.QteArticle" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDDRestaurantModel.Serveur" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDDRestaurantModel.Tablee" Width="1.5" PointX="2.875" PointY="4.5" IsExpanded="true" />
+        <AssociationConnector Association="BDDRestaurantModel.FK_ARTICLE_CATEGORIEARTICLE" ManuallyRouted="false" />
+        <AssociationConnector Association="BDDRestaurantModel.FK_QTEARTICLE_ARTICLE" ManuallyRouted="false" />
+        <AssociationConnector Association="BDDRestaurantModel.FK_COMMANDE_A_TABLEe" ManuallyRouted="false" />
+        <AssociationConnector Association="BDDRestaurantModel.FK_COMMANDE_PREND_SERVEUR" ManuallyRouted="false" />
+        <AssociationConnector Association="BDDRestaurantModel.FK_QTEARTICLE_COMMANDE" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

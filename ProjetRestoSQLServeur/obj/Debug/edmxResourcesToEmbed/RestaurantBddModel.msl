@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BDDRestaurantModelStoreContainer" CdmEntityContainer="BDDRestaurantEntities">
+    <EntitySetMapping Name="Article">
+      <EntityTypeMapping TypeName="BDDRestaurantModel.Article">
+        <MappingFragment StoreEntitySet="Article">
+          <ScalarProperty Name="idArticle" ColumnName="idArticle" />
+          <ScalarProperty Name="designationArticle" ColumnName="designationArticle" />
+          <ScalarProperty Name="prixArticle" ColumnName="prixArticle" />
+          <ScalarProperty Name="photoArticle" ColumnName="photoArticle" />
+          <ScalarProperty Name="idCatArticle" ColumnName="idCatArticle" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CategorieArticle">
+      <EntityTypeMapping TypeName="BDDRestaurantModel.CategorieArticle">
+        <MappingFragment StoreEntitySet="CategorieArticle">
+          <ScalarProperty Name="idCatArticle" ColumnName="idCatArticle" />
+          <ScalarProperty Name="libelleCatArticle" ColumnName="libelleCatArticle" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Commande">
+      <EntityTypeMapping TypeName="BDDRestaurantModel.Commande">
+        <MappingFragment StoreEntitySet="Commande">
+          <ScalarProperty Name="numCommande" ColumnName="numCommande" />
+          <ScalarProperty Name="dateHeureCommance" ColumnName="dateHeureCommance" />
+          <ScalarProperty Name="numTablee" ColumnName="numTablee" />
+          <ScalarProperty Name="idServeur" ColumnName="idServeur" />
+          <ScalarProperty Name="termine" ColumnName="termine" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QteArticle">
+      <EntityTypeMapping TypeName="BDDRestaurantModel.QteArticle">
+        <MappingFragment StoreEntitySet="QteArticle">
+          <ScalarProperty Name="numCommande" ColumnName="numCommande" />
+          <ScalarProperty Name="idArticle" ColumnName="idArticle" />
+          <ScalarProperty Name="qte" ColumnName="qte" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Serveur">
+      <EntityTypeMapping TypeName="BDDRestaurantModel.Serveur">
+        <MappingFragment StoreEntitySet="Serveur">
+          <ScalarProperty Name="idServeur" ColumnName="idServeur" />
+          <ScalarProperty Name="nomServeur" ColumnName="nomServeur" />
+          <ScalarProperty Name="prenomServeur" ColumnName="prenomServeur" />
+          <ScalarProperty Name="actif" ColumnName="actif" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tablee">
+      <EntityTypeMapping TypeName="BDDRestaurantModel.Tablee">
+        <MappingFragment StoreEntitySet="Tablee">
+          <ScalarProperty Name="numTablee" ColumnName="numTablee" />
+          <ScalarProperty Name="nbPlaceTablee" ColumnName="nbPlaceTablee" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
